@@ -86,7 +86,7 @@ public class FastFibSequence implements Sequence{
       if(number <= 1)
          return 1;
       else{
-         if(calculateValues[number - 1] != 0)
+         if(calculatedValues[number - 1] != 0)
             return calculatedValues[number - 1];
          else{
             int x = fibCalc(number - 1) + fibCalc(number - 2);

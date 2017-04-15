@@ -19,13 +19,26 @@
  |
  |  +-----------------------------------------------------------------------
  |
- |  Description:
+ |  Description:  This class tests the functionality of the sequence classes
+ |                (FastFib, Fib, and LoopFb), by generating a
+ |                Fibonacci sequence of numbers based on file input provided
+ |                by the user. Three tables will be generated, illustrating
+ |                the output and execution time of the three sequences.
+ |                The ouput will sent to a file provided by the user.
  |
- |        Input:
+ |        Input:  The file containing the number of Fibonacci values to be
+ |                generated.
  |
- |       Output:
+ |       Output:  The file where the tables will be written to.
  |
- |      Process:
+ |      Process:  The user will input the absolute paths to two files in
+ |                the command line when executing the program. The first
+ |                file will be read from to determine the size of the tables
+ |                and the second file will be written to. Three sequences
+ |                will be generated and the time required to generate them
+ |                will be recored and appended at the bottom of each table.
+ |                The user can open the file uses as the second command
+ |                line argument to view the output.
  |
  |   Required Features Not Included:   All required features are included.
  |
@@ -56,13 +69,13 @@ public class FibDemo {
    }
 
    /**
-    * Generates the fibonacci sequence up to the number
-    * provided by arguments[1].
-    * @param arguments the command line arguments provided by the user
-    * @return fibArray the fibonacci number sequence.
-    */
+   *  Generates three fibonacci sequences up to the number
+   *  provided by in and generates three tables in the file associated with out.
+   *  @param in The Scanner associated with the input file.
+   *  @param out The PrintWriter associated with the output file.
+   */
    public static void generateSequence(Scanner in, PrintWriter out){
-      int size = in.nextInt();//Integer.parseInt(arguments[0]);
+      int size = in.nextInt();
       int i;
       int fibArray[] = new int[size];
       FibSequence fib = new FibSequence();
@@ -108,20 +121,16 @@ public class FibDemo {
       out.println("Fast sequence values up to " + size + " numbers");
       generateTable(fibArray, out);
       out.println("Generated in " + elapsed + " nanoseconds.");
-
-
-
-
-
    }
 
    /**
-    * Generates a table representation of the prime sequence array created
-    * using the generateSequence method.
-    * Determines if a table will look square or irregular and calls the
-    * appropriate method.
-    * @param fibArray the fibonacci number sequence
-    */
+   *  Generates a table representation of the Fibonacci sequence array created
+   *  using the generateSequence method.
+   *  Determines if a table will look square or irregular and calls the
+   *  appropriate method.
+   *  @param fibArray The fibonacci number sequence.
+   *  @param out The PrintWriter associated with the file to be written to.
+   */
    public static void generateTable(int fibArray[], PrintWriter out){
       int size = fibArray.length;
       int root = (int)Math.sqrt(size);
@@ -140,11 +149,13 @@ public class FibDemo {
    }
 
    /**
-    * Generates a table at that looks as square as possible
-    * @param root the size used for the rows/columns of the table
-    * @param fibArray the fibonacci number sequence
-    */
-   public static void perfectSquareTable(int root, int fibArray[], PrintWriter out){
+   *  Generates a table at that looks as square as possible.
+   *  @param root The size used for the rows/columns of the table.
+   *  @param fibArray The fibonacci number sequence.
+   *  @param out The PrintWriter associated with the file to be written to.
+   */
+   public static void perfectSquareTable(int root, int fibArray[],
+      PrintWriter out){
 
       int i, j;
       int k = 0; //used to keep track of the index of the sequence array
@@ -159,11 +170,12 @@ public class FibDemo {
    }
 
    /**
-    * Generates a table that attempts to look as square as possible
-    * @param root the size used for the rows/columns of the table
-    * @param remainder the elements placed in the excess row
-    * @param primeArray the fibonacci number sequence
-    */
+   *  Generates a table that attempts to look as square as possible.
+   *  @param root the size used for the rows/columns of the table.
+   *  @param remainder the elements placed in the excess row.
+   *  @param fibArray the fibonacci number sequence.
+   *  @param out The PrintWriter associted with the file to be written to.
+   */
    public static void irregularTable(int root, int remainder,
       int fibArray[], PrintWriter out){
       int i, j;
