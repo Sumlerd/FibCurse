@@ -34,10 +34,6 @@
  |  *======================================================================*/
 
 
-/**
- *
- * @author Dylan
- */
 public class FibSequence implements Sequence{
 
    private final int BASE_VALUE = 0; //lowest possbile value of the sequence
@@ -74,6 +70,8 @@ public class FibSequence implements Sequence{
 
    /**
    *  Calculates the next number in the Fibonacci sequence.
+   *  Algorithm provided by Big Java 4th ed. pg. 568
+      @return The next number in the fibonacci sequence.
    */
    private int fibCalc(int number){
       if(number <= 1)

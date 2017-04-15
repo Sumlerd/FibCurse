@@ -37,6 +37,7 @@ public class FibDemo {
       int i;
       int fibArray[] = new int[size];
       FibSequence fib = new FibSequence();
+      LoopFibSequence fib2 = new LoopFibSequence();
 
       long startTime = System.nanoTime();
       for(i = 0; i < size; i++){
@@ -44,9 +45,25 @@ public class FibDemo {
          fib.setCurrent(fib.getCurrent() + 1);
       }
       long elapsed = System.nanoTime() - startTime;
-      out.println("Fibonacci Sequence up to " + size + " numbers");
+      out.println("Recursive Fibonacci Sequence up to " + size + " numbers");
       generateTable(fibArray, out);
       out.println("Generated in " + elapsed + " nanoseconds.");
+
+      out.println();
+      out.println();
+
+      fibArray = new int[size];
+      startTime = System.nanoTime();
+      for(i = 0; i < size; i++){
+         fibArray[i] = fib2.next();
+         fib2.setCurrent(fib2.getCurrent() + 1);
+      }
+      elapsed = System.nanoTime() - startTime;
+      out.println("Iterative Expected sequence values up to " + size + " numbers");
+      generateTable(fibArray, out);
+      out.println("Generated in " + elapsed + " nanoseconds.");
+
+
    }
 
    /**
