@@ -5,22 +5,41 @@
  */
 
 import java.util.Date;     //To calculate execution time
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.util.Scanner;
 
 public class FibDemo {
 
    /**
     * @param args the command line arguments
     */
-   public static void main(String[] args) {
+   public static void main(String[] args) throws FileNotFoundException {
+
+      File inputFile = new File(args[0]);
+      //File inputFile = new File("C:/Users/Dylan/Documents/Cawledge/inputFile.txt");
+
+      Scanner scanIn = new Scanner(inputFile);
+
+      int blurf[] = new int[1];
+
+      if(scanIn.hasNextInt())
+         blurf[0] = scanIn.nextInt();
+
+
+
+
 
       Date date = new Date();
-      int fibSequence[] = generateSequence(args);
+      int fibSequence[] = generateSequence(blurf);
       generateTable(fibSequence);
       Date date2 = new Date();
 
       long elapsed = date2.getTime() - date.getTime();
 
       System.out.println("\nElapsed time in ms: " + elapsed);
+
    }
 
    /**
@@ -29,8 +48,8 @@ public class FibDemo {
     * @param arguments the command line arguments provided by the user
     * @return fibArray the fibonacci number sequence.
     */
-   public static int[] generateSequence(String arguments[]){
-      int size = Integer.parseInt(arguments[0]);
+   public static int[] generateSequence(int arguments[]){
+      int size = arguments[0];//Integer.parseInt(arguments[0]);
       int i;
       int fibArray[] = new int[size];
       FibSequence fib = new FibSequence();
