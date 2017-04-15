@@ -38,6 +38,8 @@ public class FibDemo {
       int fibArray[] = new int[size];
       FibSequence fib = new FibSequence();
       LoopFibSequence fib2 = new LoopFibSequence();
+      FastFibSequence fib3 = new FastFibSequence();
+
 
       long startTime = System.nanoTime();
       for(i = 0; i < size; i++){
@@ -62,6 +64,24 @@ public class FibDemo {
       out.println("Iterative Expected sequence values up to " + size + " numbers");
       generateTable(fibArray, out);
       out.println("Generated in " + elapsed + " nanoseconds.");
+
+      out.println();
+      out.println();
+
+      fib3.setArrSize(size);
+      fibArray = new int[size];
+      startTime = System.nanoTime();
+      for(i = 0; i < size; i++){
+         fibArray[i] = fib3.next();
+         fib3.setCurrent(fib3.getCurrent() + 1);
+      }
+      elapsed = System.nanoTime() - startTime;
+      out.println("Fast sequence values up to " + size + " numbers");
+      generateTable(fibArray, out);
+      out.println("Generated in " + elapsed + " nanoseconds.");
+
+
+
 
 
    }
