@@ -40,9 +40,9 @@
 public interface Sequence {
 
    /**
-    * Will be used by any class that requires a unique sequence of integers
-    * to be generated.
-    * @return an integer representation of the current number in the sequence
-    */
+   * Will be used by any class that requires a unique sequence of integers
+   * to be generated.
+   * @return an integer representation of the current number in the sequence
+   */
    int next();
 }
