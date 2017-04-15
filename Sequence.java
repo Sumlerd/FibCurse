@@ -37,9 +37,6 @@
  |   Known Bugs: None; the program operates as intended.
  |  *======================================================================*/
 
-
-package fibcurse;
-
 public interface Sequence {
 
    /**

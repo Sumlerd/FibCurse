@@ -4,12 +4,10 @@
  * and open the template in the editor.
  */
 
-package fibcurse;
-
 /**
  *
  * @author Dylan
  */
 public class FastFibSequence {
-   
+
 }
