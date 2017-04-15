@@ -36,23 +36,12 @@
 
 public class FibSequence implements Sequence{
 
-   private final int BASE_VALUE = 0; //lowest possbile value of the sequence
-   private int currentValue;        //current value in the sequence
+   private int currentValue = 0;        //current value in the sequence
 
    /**
-   *  The default constructor of the fibonacci sequence. Sets the starting
-   *  index to one.
+   *  Default constructor
    */
-   FibSequence(){
-      currentValue = BASE_VALUE;
-   }
-
-   /**
-   *  Constructor to start the fibonacci sequence as a specific index
-   */
-   FibSequence(int SequenceValue){
-      currentValue = SequenceValue;
-   }
+   FibSequence(){}
 
    /**
    *  Gets the current index of the fibonacci sequence

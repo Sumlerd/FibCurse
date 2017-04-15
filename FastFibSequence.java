@@ -36,13 +36,10 @@
 
 public class FastFibSequence implements Sequence{
 
-   private final int BASE_VALUE = 0;
-   private int currentValue;
-   private int calculateValues[];// = new int[1];
+   private int currentValue = 0;
+   private int calculateValues[];
 
-   FastFibSequence(){
-      currentValue = BASE_VALUE;
-   }
+   FastFibSequence(){}
 
    public int getCurrent(){
       return currentValue;

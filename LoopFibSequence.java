@@ -35,12 +35,9 @@
 
 public class LoopFibSequence implements Sequence{
 
-   private final int BASE_VALUE = 0;   //Lowest possible value in the sequence
    private int currentValue;
 
-   LoopFibSequence(){
-      currentValue = BASE_VALUE;
-   }
+   LoopFibSequence(){}
 
    public int getCurrent(){
       return currentValue;
