@@ -22,21 +22,17 @@ public class FibDemo {
       Scanner scanIn = new Scanner(new File(args[0]));
       PrintWriter printIn = new PrintWriter(args[1]);
 
-      //int blurf[] = new int[1];
 
-      //if(scanIn.hasNextInt())
-         //blurf[0] = scanIn.nextInt();
+      //long startTime = System.currentTimeMillis();
+
+      generateSequence(scanIn, printIn);
+
+      //long elapsed = System.currentTimeMillis() - startTime;
 
 
 
-      long startTime = System.currentTimeMillis();
 
-      int fibSequence[] = generateSequence(scanIn);
-      generateTable(fibSequence, printIn);
-
-      long elapsed = System.currentTimeMillis() - startTime; //date2.getTime() - date.getTime();
-
-      System.out.println("\n\nElapsed time in ms: " + elapsed);
+      //System.out.println("\n\nElapsed time in ms: " + elapsed);
 
       scanIn.close();
       printIn.close();
@@ -49,17 +45,21 @@ public class FibDemo {
     * @param arguments the command line arguments provided by the user
     * @return fibArray the fibonacci number sequence.
     */
-   public static int[] generateSequence(Scanner in){
+   public static void generateSequence(Scanner in, PrintWriter out){
       int size = in.nextInt();//Integer.parseInt(arguments[0]);
       int i;
       int fibArray[] = new int[size];
       FibSequence fib = new FibSequence();
 
+      long startTime = System.currentTimeMillis();
       for(i = 0; i < size; i++){
          fibArray[i] = fib.next();
          fib.setCurrent(fib.getCurrent() + 1);
       }
-      return fibArray;
+      long elapsed = System.currentTimeMillis() - startTime;
+      out.println("Fibonacci Sequence up to " + size +
+         " numbers generated in " + elapsed + " ms");
+      generateTable(fibArray, out);
    }
 
    /**
@@ -94,14 +94,10 @@ public class FibDemo {
       int i, j;
       int k = 0; //used to keep track of the index of the sequence array
 
-      out.println("Fibonacci Sequence Table\n");
-      //System.out.println("Fibonacci Sequence Table\n");
       for(i = 0; i < root; i++){
             out.println();
-            //System.out.println();
             for(j = 0; j < root; j++){
                out.printf("%9d%1s", fibArray[k], " ");
-               //System.out.format("%9d%1s", fibArray[k], " ");
                k++;
             }
          }
@@ -123,7 +119,7 @@ public class FibDemo {
          excess = root - 10;
          root = 10;
       }
-      out.println("Fibonacci Sequence Table\n");
+      out.println();
       if(remainder > 10){
             for(i = 0; i < (remainder % 10); i++){
                out.printf("%9d%1s", fibArray[i], " ");
