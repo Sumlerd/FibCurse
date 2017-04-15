@@ -16,23 +16,10 @@ public class FibDemo {
     */
    public static void main(String[] args) throws FileNotFoundException {
 
-      //File inputFile = new File(args[0]);
-      //File inputFile = new File("C:/Users/Dylan/Documents/Cawledge/inputFile.txt");
-
       Scanner scanIn = new Scanner(new File(args[0]));
       PrintWriter printIn = new PrintWriter(args[1]);
 
-
-      //long startTime = System.currentTimeMillis();
-
       generateSequence(scanIn, printIn);
-
-      //long elapsed = System.currentTimeMillis() - startTime;
-
-
-
-
-      //System.out.println("\n\nElapsed time in ms: " + elapsed);
 
       scanIn.close();
       printIn.close();
@@ -51,15 +38,15 @@ public class FibDemo {
       int fibArray[] = new int[size];
       FibSequence fib = new FibSequence();
 
-      long startTime = System.currentTimeMillis();
+      long startTime = System.nanoTime();
       for(i = 0; i < size; i++){
          fibArray[i] = fib.next();
          fib.setCurrent(fib.getCurrent() + 1);
       }
-      long elapsed = System.currentTimeMillis() - startTime;
-      out.println("Fibonacci Sequence up to " + size +
-         " numbers generated in " + elapsed + " ms");
+      long elapsed = System.nanoTime() - startTime;
+      out.println("Fibonacci Sequence up to " + size + " numbers");
       generateTable(fibArray, out);
+      out.println("Generated in " + elapsed + " nanoseconds.");
    }
 
    /**
@@ -82,6 +69,8 @@ public class FibDemo {
          int remainder = size - square;
          irregularTable(root, remainder, fibArray, out);
       }
+      out.println();
+      out.println();
    }
 
    /**
@@ -100,7 +89,7 @@ public class FibDemo {
                out.printf("%9d%1s", fibArray[k], " ");
                k++;
             }
-         }
+      }
    }
 
    /**
@@ -115,7 +104,7 @@ public class FibDemo {
       int k = 0; //used to keep track of the index of the sequnce array
       int excess = 0;  //number of elements in excess row to be printed
 
-	  if(root > 10){
+	   if(root > 10){
          excess = root - 10;
          root = 10;
       }
