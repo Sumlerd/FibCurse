@@ -39,6 +39,8 @@
  |                will be recored and appended at the bottom of each table.
  |                The user can open the file uses as the second command
  |                line argument to view the output.
+ |                Additionally, the input file will be checked to ensure
+ |                existence and valid contents.
  |
  |   Required Features Not Included:   All required features are included.
  |
@@ -47,7 +49,8 @@
  |  *======================================================================*/
 
 import java.io.File;       //To retrieve input file
-import java.io.FileNotFoundException;  //handle exceptin
+import java.io.FileNotFoundException;  //handle exception
+import java.util.NoSuchElementException;
 import java.io.PrintWriter;            //Handle file output
 import java.util.Scanner;              //Retrieve file contents
 
@@ -56,16 +59,33 @@ public class FibDemo {
    /**
    *  @param args the command line arguments
    */
-   public static void main(String[] args) throws FileNotFoundException {
+   public static void main(String[] args)
+    throws FileNotFoundException, NoSuchElementException {
 
-      Scanner scanIn = new Scanner(new File(args[0]));
+
       PrintWriter printIn = new PrintWriter(args[1]);
 
-      generateSequence(scanIn, printIn);
-
-      scanIn.close();
-      printIn.close();
-
+      try{
+         Scanner scanIn = new Scanner(new File(args[0]));
+         try{
+            checkInput(scanIn);
+            generateSequence(scanIn, printIn);
+         }
+         finally{
+            scanIn.close();
+            printIn.close();
+         }
+      }
+      catch(FileNotFoundException exception){
+         File wrongFile = new File(args[0]);
+         System.out.println("File at " + wrongFile.getAbsolutePath() +
+            " does not exist.");
+      }
+      catch(NoSuchElementException exception){
+         File emptyFile = new File(args[0]);
+         System.out.println("File at " + emptyFile.getAbsolutePath() +
+            " is empty.");
+      }
    }
 
    /**
@@ -103,7 +123,8 @@ public class FibDemo {
          fib2.setCurrent(fib2.getCurrent() + 1);
       }
       elapsed = System.nanoTime() - startTime;
-      out.println("Iterative Expected sequence values up to " + size + " numbers");
+      out.println("Iterative Expected sequence values up to " + size +
+         " numbers");
       generateTable(fibArray, out);
       out.println("Generated in " + elapsed + " nanoseconds.");
 
@@ -220,4 +241,22 @@ public class FibDemo {
          }
    }
 
+   /**
+   *  Check user input to insure that the contents of the file are valid.
+   *  @param in Scanner object containing file contents.
+   */
+   public static void checkInput(Scanner in) throws UserInvalidInputException{
+      if(!in.hasNextInt())
+         throw new UserInvalidInputException("Value in input file is not " +
+            "not an integer.");
+      else{
+         int value = in.nextInt();
+         if(value < 1)
+            throw new UserInvalidInputException("Positive non-zero value " +
+               "in input file expected.");
+         else if(value > 39)
+            throw new UserInvalidInputException("Value in input file greater" +
+            " than maximum allowed value.");
+      }
+   }
 }
