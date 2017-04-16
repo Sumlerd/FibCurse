@@ -18,7 +18,7 @@
  |                 FastFibSequence.java UserInvalidInputException.java
  |                 FibDemo.java
  |                 java FibDemo inputFile.txt outputFile.txt
- 
+
  |                 Paths to inputFile.txt and outputFile.txt must be absolute.
  |                 Open outputFile.txt to observe output.
  |                 Output was tested using Notepad on Windows 7 OS, proper
@@ -62,8 +62,6 @@ import java.io.PrintWriter;            //Handle file output
 import java.util.Scanner;              //Retrieve file contents
 
 public class FibDemo {
-
-   public static final int MAX_ROW_VALUE = 10; //Max allowed value for table row
 
    /**
    *  Checks the arguments to ensure the appropriate amount has been
@@ -110,19 +108,20 @@ public class FibDemo {
    public static void formatOutput(FibSequence fib, int[] fibArray,
       PrintWriter out){
 
-      int i;
-      int size = fibArray.length;
-      long startTime = System.nanoTime();
-      for(i = 0; i < size; i++){
-         fibArray[i] = fib.next();
-         fib.setCurrent(fib.getCurrent() + 1);
-      }
-      long elapsed = System.nanoTime() - startTime;
-      out.println("Recursive Fibonacci Sequence up to " + size + " numbers");
-      generateTable(fibArray, out);
-      out.println("Generated in " + elapsed + " nanoseconds.");
-      out.println("________________________________________________________");
-      out.println();
+         int i;
+         int size = fibArray.length;
+         long startTime = System.nanoTime();
+         for(i = 0; i < size; i++){
+            fibArray[i] = fib.next();
+            fib.setCurrent(fib.getCurrent() + 1);
+         }
+         long elapsed = System.nanoTime() - startTime;
+         out.println("Recursive Fibonacci Sequence up to " + size + " numbers");
+         generateTable(fibArray, out);
+         out.println("Generated in " + elapsed + " nanoseconds.");
+         out.println("______________________________________________________"
+            + "__");
+         out.println();
    }
 
    /**
@@ -135,20 +134,21 @@ public class FibDemo {
    public static void formatOutput(LoopFibSequence fib, int[] fibArray,
       PrintWriter out){
 
-      int i;
-      int size = fibArray.length;
-      long startTime = System.nanoTime();
-      for(i = 0; i < size; i++){
-         fibArray[i] = fib.next();
-         fib.setCurrent(fib.getCurrent() + 1);
-      }
-      long elapsed = System.nanoTime() - startTime;
-      out.println("Iterative expected sequence values up to " + size +
-         " numbers");
-      generateTable(fibArray, out);
-      out.println("Generated in " + elapsed + " nanoseconds.");
-      out.println("________________________________________________________");
-      out.println();
+         int i;
+         int size = fibArray.length;
+         long startTime = System.nanoTime();
+         for(i = 0; i < size; i++){
+            fibArray[i] = fib.next();
+            fib.setCurrent(fib.getCurrent() + 1);
+         }
+         long elapsed = System.nanoTime() - startTime;
+         out.println("Iterative expected sequence values up to " + size +
+            " numbers");
+         generateTable(fibArray, out);
+         out.println("Generated in " + elapsed + " nanoseconds.");
+         out.println("______________________________________________________"
+            + "__");
+         out.println();
    }
 
    /**
@@ -161,19 +161,19 @@ public class FibDemo {
    public static void formatOutput(FastFibSequence fib, int[] fibArray,
       PrintWriter out){
 
-      int i;
-      int size = fibArray.length;
-      fib.setArrSize(size);
-      long startTime = System.nanoTime();
-      for(i = 0; i < size; i++){
-         fibArray[i] = fib.next();
-         fib.setCurrent(fib.getCurrent() + 1);
-      }
-      long elapsed = System.nanoTime() - startTime;
-      out.println("Fast sequence values up to " + size + " numbers");
-      generateTable(fibArray, out);
-      out.println("Generated in " + elapsed + " nanoseconds.");
-      out.println();
+         int i;
+         int size = fibArray.length;
+         fib.setArrSize(size);
+         long startTime = System.nanoTime();
+         for(i = 0; i < size; i++){
+            fibArray[i] = fib.next();
+            fib.setCurrent(fib.getCurrent() + 1);
+         }
+         long elapsed = System.nanoTime() - startTime;
+         out.println("Fast sequence values up to " + size + " numbers");
+         generateTable(fibArray, out);
+         out.println("Generated in " + elapsed + " nanoseconds.");
+         out.println();
    }
 
    /**
@@ -210,16 +210,16 @@ public class FibDemo {
    public static void perfectSquareTable(int root, int fibArray[],
       PrintWriter out){
 
-      int i, j;
-      int k = 0; //used to keep track of the index of the sequence array
+         int i, j;
+         int k = 0; //used to keep track of the index of the sequence array
 
-      for(i = 0; i < root; i++){
-            out.println();
-            for(j = 0; j < root; j++){
-               out.printf("%9d%1s", fibArray[k], " ");
-               k++;
-            }
-      }
+         for(i = 0; i < root; i++){
+               out.println();
+               for(j = 0; j < root; j++){
+                  out.printf("%9d%1s", fibArray[k], " ");
+                  k++;
+               }
+         }
    }
 
    /**
@@ -231,45 +231,31 @@ public class FibDemo {
    */
    public static void irregularTable(int root, int remainder,
       int fibArray[], PrintWriter out){
-      int i, j;
-      int k = 0; //used to keep track of the index of the sequnce array
-      int excess = 0;  //number of elements in excess row to be printed
 
-	   if(root > MAX_ROW_VALUE){
-         excess = root - MAX_ROW_VALUE;
-         root = MAX_ROW_VALUE;
-      }
-      out.println();
-      if(remainder > MAX_ROW_VALUE){
-            for(i = 0; i < (remainder % MAX_ROW_VALUE); i++){
-               out.printf("%9d%1s", fibArray[i], " ");
-            }
-            for(i = 0; i < (remainder/MAX_ROW_VALUE); i++){
+         int i, j;
+         int k = 0; //used to keep track of the index of the sequnce array
+
+         for(i = 0; i < root; i++){
                out.println();
-               for(j = 0; j < MAX_ROW_VALUE; j++){
-                  out.printf("%9d%1s", fibArray[k + remainder % MAX_ROW_VALUE],
-                     " ");
+               for(j = 0; j < root; j++){
+                  out.printf("%9d%1s", fibArray[k], " ");
                   k++;
                }
-            }
-         }
-		   else{
-            for(i = 0; i < remainder; i++){
-               out.printf("%9d%1s", fibArray[i], " ");
-            }
-		   }
-
-         if(remainder == 1)
-            k++;
-         else
-            k+= remainder;
-
-         for(i = 0; i < (root + excess); i++){
-            out.println();
-            for(j = 0; j < root; j++){
-               out.printf("%9d%1s", fibArray[k], " ");
-               k++;
-            }
+               if(remainder > 0){
+                  if(remainder >= root){
+                     remainder--;
+                     out.printf("%9d%1s", fibArray[k], " ");
+                     k++;
+                  }
+                  else if(remainder / 2 != 0){
+                     remainder--;
+                     out.printf("%9d%1s", fibArray[k], " ");
+                     k++;
+                  }
+                  remainder--;
+                  out.printf("%9d%1s", fibArray[k], " ");
+                  k++;
+               }
          }
    }
 
