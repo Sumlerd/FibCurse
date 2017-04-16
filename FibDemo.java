@@ -49,8 +49,7 @@
  |  *======================================================================*/
 
 import java.io.File;       //To retrieve input file
-import java.io.FileNotFoundException;  //handle exception
-import java.util.NoSuchElementException;
+import java.io.FileNotFoundException;  //handle filenotfound exception
 import java.io.PrintWriter;            //Handle file output
 import java.util.Scanner;              //Retrieve file contents
 
@@ -59,8 +58,7 @@ public class FibDemo {
    /**
    *  @param args the command line arguments
    */
-   public static void main(String[] args)
-    throws FileNotFoundException, NoSuchElementException {
+   public static void main(String[] args) throws FileNotFoundException{
 
 
       PrintWriter printIn = new PrintWriter(args[1]);
@@ -69,6 +67,8 @@ public class FibDemo {
          Scanner scanIn = new Scanner(new File(args[0]));
          try{
             checkInput(scanIn);
+            /*To deal with intermediate NoSuchElementException*/
+            scanIn = new Scanner(new File(args[0]));
             generateSequence(scanIn, printIn);
          }
          finally{
@@ -80,11 +80,6 @@ public class FibDemo {
          File wrongFile = new File(args[0]);
          System.out.println("File at " + wrongFile.getAbsolutePath() +
             " does not exist.");
-      }
-      catch(NoSuchElementException exception){
-         File emptyFile = new File(args[0]);
-         System.out.println("File at " + emptyFile.getAbsolutePath() +
-            " is empty.");
       }
    }
 
@@ -246,7 +241,9 @@ public class FibDemo {
    *  @param in Scanner object containing file contents.
    */
    public static void checkInput(Scanner in) throws UserInvalidInputException{
-      if(!in.hasNextInt())
+      if(!in.hasNext())
+         throw new UserInvalidInputException("Input file is empty.");
+      else if(!in.hasNextInt())
          throw new UserInvalidInputException("Value in input file is not " +
             "not an integer.");
       else{
@@ -256,7 +253,7 @@ public class FibDemo {
                "in input file expected.");
          else if(value > 39)
             throw new UserInvalidInputException("Value in input file greater" +
-            " than maximum allowed value.");
+            " than maximum allowed value (39).");
       }
    }
 }
