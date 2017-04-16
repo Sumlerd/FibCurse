@@ -58,29 +58,16 @@ public class FibDemo {
    /**
    *  @param args the command line arguments
    */
-   public static void main(String[] args) throws FileNotFoundException{
-
-
-      PrintWriter printIn = new PrintWriter(args[1]);
-
+   public static void main(String[] args) throws
+   ArrayIndexOutOfBoundsException, FileNotFoundException{
       try{
-         Scanner scanIn = new Scanner(new File(args[0]));
-         try{
-            checkInput(scanIn);
-            /*To deal with intermediate NoSuchElementException*/
-            scanIn = new Scanner(new File(args[0]));
-            generateSequence(scanIn, printIn);
-         }
-         finally{
-            scanIn.close();
-            printIn.close();
-         }
+         checkArgs(args);
       }
-      catch(FileNotFoundException exception){
-         File wrongFile = new File(args[0]);
-         System.out.println("File at " + wrongFile.getAbsolutePath() +
-            " does not exist.");
+      catch(ArrayIndexOutOfBoundsException exception){
+         System.out.println("Please enter two arguments; the first being "
+            + "the input file and the second being the output file.");
       }
+
    }
 
    /**
@@ -97,7 +84,11 @@ public class FibDemo {
       LoopFibSequence fib2 = new LoopFibSequence();
       FastFibSequence fib3 = new FastFibSequence();
 
+      formatOutput(fib, fibArray, out);
+      formatOutput(fib2, fibArray, out);
+      formatOutput(fib3, fibArray, out);
 
+      /*
       long startTime = System.nanoTime();
       for(i = 0; i < size; i++){
          fibArray[i] = fib.next();
@@ -137,7 +128,66 @@ public class FibDemo {
       out.println("Fast sequence values up to " + size + " numbers");
       generateTable(fibArray, out);
       out.println("Generated in " + elapsed + " nanoseconds.");
+      */
+
    }
+
+   public static void formatOutput(FibSequence fib, int[] fibArray,
+      PrintWriter out){
+
+      int i;
+      int size = fibArray.length;
+      long startTime = System.nanoTime();
+      for(i = 0; i < size; i++){
+         fibArray[i] = fib.next();
+         fib.setCurrent(fib.getCurrent() + 1);
+      }
+      long elapsed = System.nanoTime() - startTime;
+      out.println("Recursive Fibonacci Sequence up to " + size + " numbers");
+      generateTable(fibArray, out);
+      out.println("Generated in " + elapsed + " nanoseconds.");
+      out.println("________________________________________________________");
+      out.println();
+   }
+
+   public static void formatOutput(LoopFibSequence fib, int[] fibArray,
+      PrintWriter out){
+
+      int i;
+      int size = fibArray.length;
+      long startTime = System.nanoTime();
+      for(i = 0; i < size; i++){
+         fibArray[i] = fib.next();
+         fib.setCurrent(fib.getCurrent() + 1);
+      }
+      long elapsed = System.nanoTime() - startTime;
+      out.println("Iterative expected sequence values up to " + size +
+         " numbers");
+      generateTable(fibArray, out);
+      out.println("Generated in " + elapsed + " nanoseconds.");
+      out.println("________________________________________________________");
+      out.println();
+   }
+
+   public static void formatOutput(FastFibSequence fib, int[] fibArray,
+      PrintWriter out){
+
+      int i;
+      int size = fibArray.length;
+      fib.setArrSize(size);
+      long startTime = System.nanoTime();
+      for(i = 0; i < size; i++){
+         fibArray[i] = fib.next();
+         fib.setCurrent(fib.getCurrent() + 1);
+      }
+      long elapsed = System.nanoTime() - startTime;
+      out.println("Fast sequence values up to " + size + " numbers");
+      generateTable(fibArray, out);
+      out.println("Generated in " + elapsed + " nanoseconds.");
+      out.println();
+   }
+
+
 
    /**
    *  Generates a table representation of the Fibonacci sequence array created
@@ -237,10 +287,39 @@ public class FibDemo {
    }
 
    /**
-   *  Check user input to insure that the contents of the file are valid.
+   *  Check the user input to ensure that the input file exists.
+   *  @param args Array containing input and output file arguments.
+   */
+   public static void checkArgs(String args[]) throws FileNotFoundException{
+
+      PrintWriter printIn = new PrintWriter(args[1]);
+
+      try{
+         Scanner scanIn = new Scanner(new File(args[0]));
+         try{
+            checkFile(scanIn);
+            /*To deal with intermediate NoSuchElementException*/
+            scanIn = new Scanner(new File(args[0]));
+            generateSequence(scanIn, printIn);
+         }
+         finally{
+            scanIn.close();
+            printIn.close();
+         }
+      }
+      catch(FileNotFoundException exception){
+         File wrongFile = new File(args[0]);
+         System.out.println("File at " + wrongFile.getAbsolutePath() +
+            " does not exist.");
+      }
+
+   }
+
+   /**
+   *  Check file input to insure that the contents are valid.
    *  @param in Scanner object containing file contents.
    */
-   public static void checkInput(Scanner in) throws UserInvalidInputException{
+   public static void checkFile(Scanner in) throws UserInvalidInputException{
       if(!in.hasNext())
          throw new UserInvalidInputException("Input file is empty.");
       else if(!in.hasNextInt())
