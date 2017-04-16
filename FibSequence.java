@@ -14,8 +14,15 @@
  |	______________________________________ [Signature]
  |
  |      Language:  Java
- |   Compile/Run:
- |
+ |   Compile/Run:  javac Sequence.java FibSequence.java LoopFibSequence.java
+ |                 FastFibSequence.java UserInvalidInputException.java
+ |                 FibDemo.java
+ |                 java FibDemo inputFile.txt outputFile.txt
+
+ |                 Paths to inputFile.txt and outputFile.txt must be absolute.
+ |                 Open outputFile.txt to observe output.
+ |                 Output was tested using Notepad on Windows 7 OS, proper
+ |                 output display is not guaranteed for any other text editors.
  |
  |  +-----------------------------------------------------------------------
  |
@@ -65,7 +72,9 @@ public class FibSequence implements Sequence{
    }
 
    /**
-   *  Calculates the next number in the Fibonacci sequence.
+   *  Calculates the next number in the Fibonacci sequence using
+   *  a recusive algorithm.
+   *  Algorithm created with the assistance of Big Java, 4th ed. pg 568.
    *  @return The next number in the sequence.
    */
    private int fibCalc(int number){

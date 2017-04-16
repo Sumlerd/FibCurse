@@ -14,13 +14,21 @@
  |	______________________________________ [Signature]
  |
  |      Language:  Java
- |   Compile/Run:
+ |   Compile/Run:  javac Sequence.java FibSequence.java LoopFibSequence.java
+ |                 FastFibSequence.java UserInvalidInputException.java
+ |                 FibDemo.java
+ |                 java FibDemo inputFile.txt outputFile.txt
+ 
+ |                 Paths to inputFile.txt and outputFile.txt must be absolute.
+ |                 Open outputFile.txt to observe output.
+ |                 Output was tested using Notepad on Windows 7 OS, proper
+ |                 output display is not guaranteed for any other text editors.
  |
  |
  |  +-----------------------------------------------------------------------
  |
  |  Description:  This class tests the functionality of the sequence classes
- |                (FastFib, Fib, and LoopFb), by generating a
+ |                (FastFib, Fib, and LoopFib), by generating a
  |                Fibonacci sequence of numbers based on file input provided
  |                by the user. Three tables will be generated, illustrating
  |                the output and execution time of the three sequences.
@@ -48,14 +56,18 @@
  |   Known Bugs:  None; the program operates as intended.
  |  *======================================================================*/
 
-import java.io.File;       //To retrieve input file
-import java.io.FileNotFoundException;  //handle filenotfound exception
+import java.io.File;                   //To retrieve input file
+import java.io.FileNotFoundException;  //Handle filenotfound exception
 import java.io.PrintWriter;            //Handle file output
 import java.util.Scanner;              //Retrieve file contents
 
 public class FibDemo {
 
+   public static final int MAX_ROW_VALUE = 10; //Max allowed value for table row
+
    /**
+   *  Checks the arguments to ensure the appropriate amount has been
+   *  provided and runs the program.
    *  @param args the command line arguments
    */
    public static void main(String[] args) throws
@@ -67,7 +79,6 @@ public class FibDemo {
          System.out.println("Please enter two arguments; the first being "
             + "the input file and the second being the output file.");
       }
-
    }
 
    /**
@@ -80,58 +91,22 @@ public class FibDemo {
       int size = in.nextInt();
       int i;
       int fibArray[] = new int[size];
-      FibSequence fib = new FibSequence();
+      FibSequence fib1 = new FibSequence();
       LoopFibSequence fib2 = new LoopFibSequence();
       FastFibSequence fib3 = new FastFibSequence();
 
-      formatOutput(fib, fibArray, out);
+      formatOutput(fib1, fibArray, out);
       formatOutput(fib2, fibArray, out);
       formatOutput(fib3, fibArray, out);
-
-      /*
-      long startTime = System.nanoTime();
-      for(i = 0; i < size; i++){
-         fibArray[i] = fib.next();
-         fib.setCurrent(fib.getCurrent() + 1);
-      }
-      long elapsed = System.nanoTime() - startTime;
-      out.println("Recursive Fibonacci Sequence up to " + size + " numbers");
-      generateTable(fibArray, out);
-      out.println("Generated in " + elapsed + " nanoseconds.");
-
-      out.println();
-      out.println();
-
-      fibArray = new int[size];
-      startTime = System.nanoTime();
-      for(i = 0; i < size; i++){
-         fibArray[i] = fib2.next();
-         fib2.setCurrent(fib2.getCurrent() + 1);
-      }
-      elapsed = System.nanoTime() - startTime;
-      out.println("Iterative Expected sequence values up to " + size +
-         " numbers");
-      generateTable(fibArray, out);
-      out.println("Generated in " + elapsed + " nanoseconds.");
-
-      out.println();
-      out.println();
-
-      fib3.setArrSize(size);
-      fibArray = new int[size];
-      startTime = System.nanoTime();
-      for(i = 0; i < size; i++){
-         fibArray[i] = fib3.next();
-         fib3.setCurrent(fib3.getCurrent() + 1);
-      }
-      elapsed = System.nanoTime() - startTime;
-      out.println("Fast sequence values up to " + size + " numbers");
-      generateTable(fibArray, out);
-      out.println("Generated in " + elapsed + " nanoseconds.");
-      */
-
    }
 
+   /**
+   *  Detemines the fibonacci sequence using a recursive algorithm and
+   *  creates a table.
+   *  @param fib The regular recursive fibonacci sequence object.
+   *  @param fibArray The empty array that will store the generated sequence.
+   *  @param out  The PrintWriter associated with the output file.
+   */
    public static void formatOutput(FibSequence fib, int[] fibArray,
       PrintWriter out){
 
@@ -150,6 +125,13 @@ public class FibDemo {
       out.println();
    }
 
+   /**
+   *  Detemines the fibonacci sequence using an iterative algorithm and
+   *  creates a table.
+   *  @param fib The iterative recursive fibonacci sequence object.
+   *  @param fibArray The empty array that will store the generated sequence.
+   *  @param out  The PrintWriter associated with the output file.
+   */
    public static void formatOutput(LoopFibSequence fib, int[] fibArray,
       PrintWriter out){
 
@@ -169,6 +151,13 @@ public class FibDemo {
       out.println();
    }
 
+   /**
+   *  Detemines the fibonacci sequence using a fast recursive algorithm and
+   *  creates a table.
+   *  @param fib The fast recursive fibonacci sequence object.
+   *  @param fibArray The empty array that will store the generated sequence.
+   *  @param out  The PrintWriter associated with the output file.
+   */
    public static void formatOutput(FastFibSequence fib, int[] fibArray,
       PrintWriter out){
 
@@ -186,8 +175,6 @@ public class FibDemo {
       out.println("Generated in " + elapsed + " nanoseconds.");
       out.println();
    }
-
-
 
    /**
    *  Generates a table representation of the Fibonacci sequence array created
@@ -248,19 +235,19 @@ public class FibDemo {
       int k = 0; //used to keep track of the index of the sequnce array
       int excess = 0;  //number of elements in excess row to be printed
 
-	   if(root > 10){
-         excess = root - 10;
-         root = 10;
+	   if(root > MAX_ROW_VALUE){
+         excess = root - MAX_ROW_VALUE;
+         root = MAX_ROW_VALUE;
       }
       out.println();
-      if(remainder > 10){
-            for(i = 0; i < (remainder % 10); i++){
+      if(remainder > MAX_ROW_VALUE){
+            for(i = 0; i < (remainder % MAX_ROW_VALUE); i++){
                out.printf("%9d%1s", fibArray[i], " ");
             }
-            for(i = 0; i < (remainder/10); i++){
+            for(i = 0; i < (remainder/MAX_ROW_VALUE); i++){
                out.println();
-               for(j = 0; j < 10; j++){
-                  out.printf("%9d%1s", fibArray[k + remainder % 10],
+               for(j = 0; j < MAX_ROW_VALUE; j++){
+                  out.printf("%9d%1s", fibArray[k + remainder % MAX_ROW_VALUE],
                      " ");
                   k++;
                }
